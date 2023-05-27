@@ -394,6 +394,17 @@ pycryptodomex = ">=3.12.0,<4.0.0"
 docs = ["Sphinx[docs] (>=4.3.2,<6.0.0)", "sphinx-autodoc-typehints[docs] (==1.12.0)", "sphinx-rtd-theme[docs] (>=1.0.0,<2.0.0)"]
 
 [[package]]
+name = "python-dotenv"
+version = "1.0.0"
+description = "Read key-value pairs from a .env file and set them as environment variables"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.extras]
+cli = ["click (>=5.0)"]
+
+[[package]]
 name = "python-lsp-jsonrpc"
 version = "1.0.0"
 description = "JSON RPC 2.0 server library"
@@ -616,7 +627,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10.0,<3.11"
-content-hash = "de3a415203f81ae32c58af51d9848161b2b9179a3bbe9af7fbca5185bb929190"
+content-hash = "bfbd5085750e0705dc8662e98baf8ac6bccf78b9b33b0cebe6683e71787844a0"
 
 [metadata.files]
 aiohttp = []
@@ -653,6 +664,7 @@ pycparser = []
 pycryptodomex = []
 pyflakes = []
 pyseto = []
+python-dotenv = []
 python-lsp-jsonrpc = []
 pytoolconfig = []
 replit = []
