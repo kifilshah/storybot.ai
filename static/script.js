@@ -1,30 +1,61 @@
-function sendMessage() {
-    const userInput = document.getElementById("userInput");
-    const chatHistory = document.getElementById("chatHistory");
+$(document).ready(function() {
+    let promptHistory = [];
 
-    // Add the user's message to the chat history
-    chatHistory.innerHTML += "You: " + userInput.value + "<br />";
-    userInput.value = "";
+    // Initial check for sendButton
+    updateSendButton();
 
-    // Show loader
-    const loader = document.getElementById("loader");
-    loader.classList.remove("d-none");
+    // Event handler to enable or disable sendButton based on userInput
+    $('#userInput').on('input', function() {
+        updateSendButton();
+    });
 
-    // Make API call
-    fetch("/ask", {
-        method: "POST",
-        body: new URLSearchParams({ message: userInput.value }),
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            chatHistory.innerHTML += "Bot: " + data.response + "<br />";
-        })
-        .catch((error) => {
-            chatHistory.innerHTML += "Bot: Error" + "<br />";
-            console.error(error);
-        })
-        .finally(() => {
-            // Hide loader
-            loader.classList.add("d-none");
+    $('#sendButton').click(function(event) {
+        event.preventDefault();
+
+        let userInput = $('#userInput').val();
+        $('#chatResponseContent').html("<strong>You:</strong> " + userInput);
+
+        // Save the user input to the prompt history
+        promptHistory.push(userInput);
+
+        // Display the prompt history
+        $('#promptList').empty();
+        for (let prompt of promptHistory) {
+            $('#promptList').append('<li>' + prompt + '</li>');
+        }
+
+        $('#userInput').val('');
+        updateSendButton();
+        $('#loader').removeClass("d-none");
+
+        // Display the 'Your story is being generated...' message
+        $('#chatResponseContent').html("<strong>Bot:</strong> Your story is being generated...");
+
+        $.ajax({
+            url: "/ask",
+            method: "POST",
+            data: { message: promptHistory.join(' ') },
+            dataType: "json",
+            success: function(data) {
+                $('#chatResponseContent').html("<strong>Bot:</strong> " + data.response);
+            },
+            error: function() {
+                $('#chatResponseContent').html("<strong>Bot:</strong> Error");
+            },
+            complete: function() {
+                $('#loader').addClass("d-none");
+            }
         });
-}
+
+        return false;
+    });
+
+    // Function to update the state of the sendButton
+    function updateSendButton() {
+        if ($('#userInput').val() === '') {
+            $('#sendButton').prop('disabled', true);
+        } else {
+            $('#sendButton').prop('disabled', false);
+        }
+    }
+});

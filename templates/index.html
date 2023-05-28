@@ -1,19 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chatbot</title>
+    <title>Storybot.ai</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <!-- Bootstrap CSS for easy and quick styling -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="/static/script.js" defer></script>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<body class="bg-light p-5">
-    <div id="chatbox" class="border p-3 mb-2 bg-white rounded">
-        <div id="chatHistory" class="mb-3"></div>
-        <input type="text" class="form-control mb-2" id="userInput" placeholder="Type your message here..." />
-        <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+<body>
+    <!-- Main Chatbox Container -->
+    <div id="chatbox" class="p-4 mb-3 bg-white rounded">
+        <h4>Welcome to Storybot.ai</h4>
+        <p>Plot your story using the input below. Each plot point will be integrated into your growing story.</p>
+        <hr>
+
+        <!-- Plot Points Container -->
+        <div id="promptHistory">
+            <h6>Your Plot Points:</h6>
+            <ul id="promptList"></ul>
+        </div>
+        <hr>
+
+        <!-- Story Response Container -->
+        <div id="chatResponse">
+            <h6>Your Story:</h6>
+            <div id="chatResponseContent"></div>
+        </div>
+        <hr>
+
+        <!-- User Input Form -->
+        <form id="userInputContainer">
+            <input type="text" class="form-control mb-2" id="userInput" placeholder="Type your plot point here" required />
+            <button class="btn btn-primary" id="sendButton" disabled>Add to Story</button>
+        </form>
     </div>
+
+    <!-- Loading spinner to indicate story generation -->
     <div id="loader" class="d-none spinner-border text-primary" role="status">
-    <span class="visually-hidden">Loading...</span>
+        <span class="sr-only">Loading...</span>
     </div>
-</div>
+
+    <script src="/static/script.js"></script>
 </body>
 </html>
